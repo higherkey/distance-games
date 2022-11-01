@@ -1,0 +1,1 @@
+{"version":3,"sources":["src/style.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA","file":"style.c61ab535.css","sourceRoot":"..","sourcesContent":[".cell {\r\n  border: 1px solid #555;\r\n  width: 50px;\r\n  height: 50px;\r\n  line-height: 50px;\r\n  text-align: center;\r\n}"]}
