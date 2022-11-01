@@ -4,7 +4,8 @@
   "description": "Web application for games to play at a distance. Built using the [boardgame.io engine](https://github.com/boardgameio/boardgame.io).",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html --open"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,7 @@
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
-  }
+  },
+  "browserslist": "defaults and supports async-functions"
+
 }
