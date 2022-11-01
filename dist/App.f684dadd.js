@@ -16610,29 +16610,149 @@ require("flatted");
 require("setimmediate");
 require("./ai-7998b00f.js");
 var _client5f57c3f = require("./client-5f57c3f2.js");
-},{"nanoid/non-secure":"node_modules/nanoid/non-secure/index.js","./Debug-8242c26e.js":"node_modules/boardgame.io/dist/esm/Debug-8242c26e.js","redux":"node_modules/redux/es/redux.js","./turn-order-8cc4909b.js":"node_modules/boardgame.io/dist/esm/turn-order-8cc4909b.js","immer":"node_modules/immer/dist/immer.esm.js","./plugin-random-087f861e.js":"node_modules/boardgame.io/dist/esm/plugin-random-087f861e.js","lodash.isplainobject":"node_modules/lodash.isplainobject/index.js","./reducer-24ea3e4c.js":"node_modules/boardgame.io/dist/esm/reducer-24ea3e4c.js","rfc6902":"node_modules/rfc6902/index.js","./initialize-7316768f.js":"node_modules/boardgame.io/dist/esm/initialize-7316768f.js","./transport-ce07b771.js":"node_modules/boardgame.io/dist/esm/transport-ce07b771.js","./client-f7f02b82.js":"node_modules/boardgame.io/dist/esm/client-f7f02b82.js","flatted":"node_modules/flatted/esm/index.js","setimmediate":"node_modules/setimmediate/setImmediate.js","./ai-7998b00f.js":"node_modules/boardgame.io/dist/esm/ai-7998b00f.js","./client-5f57c3f2.js":"node_modules/boardgame.io/dist/esm/client-5f57c3f2.js"}],"src/Game.js":[function(require,module,exports) {
+},{"nanoid/non-secure":"node_modules/nanoid/non-secure/index.js","./Debug-8242c26e.js":"node_modules/boardgame.io/dist/esm/Debug-8242c26e.js","redux":"node_modules/redux/es/redux.js","./turn-order-8cc4909b.js":"node_modules/boardgame.io/dist/esm/turn-order-8cc4909b.js","immer":"node_modules/immer/dist/immer.esm.js","./plugin-random-087f861e.js":"node_modules/boardgame.io/dist/esm/plugin-random-087f861e.js","lodash.isplainobject":"node_modules/lodash.isplainobject/index.js","./reducer-24ea3e4c.js":"node_modules/boardgame.io/dist/esm/reducer-24ea3e4c.js","rfc6902":"node_modules/rfc6902/index.js","./initialize-7316768f.js":"node_modules/boardgame.io/dist/esm/initialize-7316768f.js","./transport-ce07b771.js":"node_modules/boardgame.io/dist/esm/transport-ce07b771.js","./client-f7f02b82.js":"node_modules/boardgame.io/dist/esm/client-f7f02b82.js","flatted":"node_modules/flatted/esm/index.js","setimmediate":"node_modules/setimmediate/setImmediate.js","./ai-7998b00f.js":"node_modules/boardgame.io/dist/esm/ai-7998b00f.js","./client-5f57c3f2.js":"node_modules/boardgame.io/dist/esm/client-5f57c3f2.js"}],"node_modules/boardgame.io/dist/esm/core.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "ActivePlayers", {
+  enumerable: true,
+  get: function () {
+    return _turnOrder8cc4909b.C;
+  }
+});
+Object.defineProperty(exports, "GameMethod", {
+  enumerable: true,
+  get: function () {
+    return _turnOrder8cc4909b.G;
+  }
+});
+Object.defineProperty(exports, "INVALID_MOVE", {
+  enumerable: true,
+  get: function () {
+    return _turnOrder8cc4909b.n;
+  }
+});
+exports.PlayerView = void 0;
+Object.defineProperty(exports, "Stage", {
+  enumerable: true,
+  get: function () {
+    return _turnOrder8cc4909b.S;
+  }
+});
+Object.defineProperty(exports, "TurnOrder", {
+  enumerable: true,
+  get: function () {
+    return _turnOrder8cc4909b.T;
+  }
+});
+var _turnOrder8cc4909b = require("./turn-order-8cc4909b.js");
+require("immer");
+require("./plugin-random-087f861e.js");
+require("lodash.isplainobject");
+/*
+ * Copyright 2018 The boardgame.io Authors
+ *
+ * Use of this source code is governed by a MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+/**
+ * PlayerView reducers.
+ */
+const PlayerView = {
+  /**
+   * STRIP_SECRETS
+   *
+   * Reducer which removes a key named `secret` and
+   * removes all the keys in `players`, except for the one
+   * corresponding to the current playerID.
+   */
+  STRIP_SECRETS: _ref => {
+    let {
+      G,
+      playerID
+    } = _ref;
+    const r = {
+      ...G
+    };
+    if (r.secret !== undefined) {
+      delete r.secret;
+    }
+    if (r.players) {
+      r.players = playerID ? {
+        [playerID]: r.players[playerID]
+      } : {};
+    }
+    return r;
+  }
+};
+exports.PlayerView = PlayerView;
+},{"./turn-order-8cc4909b.js":"node_modules/boardgame.io/dist/esm/turn-order-8cc4909b.js","immer":"node_modules/immer/dist/immer.esm.js","./plugin-random-087f861e.js":"node_modules/boardgame.io/dist/esm/plugin-random-087f861e.js","lodash.isplainobject":"node_modules/lodash.isplainobject/index.js"}],"src/Game.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.TicTacToe = void 0;
+var _core = require("boardgame.io/core");
 const TicTacToe = {
+  // setup, moves, etc.
+
   setup: () => ({
     cells: Array(9).fill(null)
   }),
+  turn: {
+    minMoves: 1,
+    maxMoves: 1
+  },
   moves: {
     clickCell: (_ref, id) => {
       let {
         G,
         playerID
       } = _ref;
+      if (G.cells[id] !== null) {
+        return _core.INVALID_MOVE;
+      }
       G.cells[id] = playerID;
+    }
+  },
+  endIf: _ref2 => {
+    let {
+      G,
+      ctx
+    } = _ref2;
+    if (IsVictory(G.cells)) {
+      return {
+        winner: ctx.currentPlayer
+      };
+    }
+    if (IsDraw(G.cells)) {
+      return {
+        draw: true
+      };
     }
   }
 };
+
+// Return true if `cells` is in a winning configuration.
 exports.TicTacToe = TicTacToe;
-},{}],"src/App.js":[function(require,module,exports) {
+function IsVictory(cells) {
+  const positions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+  const isRowComplete = row => {
+    const symbols = row.map(i => cells[i]);
+    return symbols.every(i => i !== null && i === symbols[0]);
+  };
+  return positions.map(isRowComplete).some(i => i === true);
+}
+
+// Return true if all `cells` are occupied.
+function IsDraw(cells) {
+  return cells.filter(c => c === null).length === 0;
+}
+},{"boardgame.io/core":"node_modules/boardgame.io/dist/esm/core.js"}],"src/App.js":[function(require,module,exports) {
 "use strict";
 
 var _client = require("boardgame.io/client");
