@@ -1,0 +1,26 @@
+{
+  "name": "distance-games",
+  "version": "1.0.0",
+  "description": "Web application for games to play at a distance. Built using the [boardgame.io engine](https://github.com/boardgameio/boardgame.io).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/higherkey/distance-games.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/higherkey/distance-games/issues"
+  },
+  "homepage": "https://github.com/higherkey/distance-games#readme",
+  "dependencies": {
+    "boardgame.io": "^0.50.1"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
